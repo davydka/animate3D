@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>ANIMATION</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+		<style>
+			body {
+				font-family: Monospace;
+				background-color: #000;
+				color: #fff;
+				margin: 0px;
+				overflow: hidden;
+			}
+		</style>
+	</head>
+
+	<body>
+		<script src="/web/js/three.js"></script>
+
+		<script src="/web/js/controls/OrbitControls.js"></script>
+		<script src="/web/js/loaders/GLTFLoader.js"></script>
+
+		<script src="/web/js/Detector.js"></script>
+		<script src="/web/js/libs/stats.min.js"></script>
+
+		<script>
+			if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
+
+			var container, stats, controls;
+			var camera, scene, renderer, light;
+
+			var mixer;
+			var clock = new THREE.Clock();
+
+			init();
+
+			function init() {
+				container = document.createElement( 'div' );
+				document.body.appendChild( container );
+
+				scene = new THREE.Scene();
+				scene.background = new THREE.Color( 0xf0f000 );
+
+				// model
+				var loader = new THREE.GLTFLoader();
+				loader.load( '/bin/data/simple_sphere_test.gltf', function ( gltf ) {
+
+					console.log(gltf);
+					const cam = gltf.cameras[0];
+					// console.log(cam);
+
+					let light = new THREE.PointLight(0x0055ff, 1, 25);
+					light.position.set(0,0,0);
+					scene.add(light);
+					light = new THREE.PointLight(0x5500ff, 1, 25);
+					light.position.set(-4,0,0);
+					scene.add(light);
+					light = new THREE.PointLight(0x55ff00, 1, 25);
+					light.position.set(4,0,0);
+					scene.add(light);
+
+					const gscene = gltf.scene;
+					gscene.children = gscene.children.filter((child, index, object) => {
+						if(child.type === "Mesh") {
+							// console.log('handle mesh');
+							return true;
+						}
+
+						if(child.name.startsWith('Lamp')) {
+							// console.log('handle lamp');
+							// console.log(child);
+							/*
+							const p = child.position;
+							const c = child.userData.extras;
+							const color = new THREE.Color(c[0], c[1], c[2]);
+
+							const light = new THREE.PointLight(color, .1, 25);
+							light.position.set(p.x, p.y, p.z);
+							scene.add(light);
+
+							var sphereSize = 1;
+							var pointLightHelper = new THREE.PointLightHelper( light, sphereSize );
+							scene.add( pointLightHelper );
+							*/
+
+							return false;
+						}
+					});
+
+					camera = new THREE.PerspectiveCamera(
+						cam.fov,
+						window.innerWidth / window.innerHeight,
+						cam.near,
+						cam.far
+					);
+					camera.position.set(
+						cam.parent.position.x,
+						cam.parent.position.y,
+						cam.parent.position.z
+						);
+
+					controls = new THREE.OrbitControls( camera );
+					// controls.target.set( 0, -0.2, -0.2 );
+					controls.update();
+					camera.updateProjectionMatrix();
+
+					mixer = new THREE.AnimationMixer(gltf.scene);
+
+					scene.add( gscene );
+					mixer.clipAction(gltf.animations[0]).play();
+					animate();
+					
+					console.log(scene);
+				} );
+
+				renderer = new THREE.WebGLRenderer( { antialias: true } );
+				renderer.setPixelRatio( window.devicePixelRatio );
+				renderer.setSize( window.innerWidth, window.innerHeight );
+				renderer.gammaOutput = true;
+				container.appendChild( renderer.domElement );
+
+				window.addEventListener( 'resize', onWindowResize, false );
+
+				// stats
+				stats = new Stats();
+				container.appendChild( stats.dom );
+			}
+
+			function onWindowResize() {
+				camera.aspect = window.innerWidth / window.innerHeight;
+				camera.updateProjectionMatrix();
+				renderer.setSize( window.innerWidth, window.innerHeight );
+			}
+
+			function animate() {
+				requestAnimationFrame( animate );
+				mixer.update(clock.getDelta());
+				renderer.render( scene, camera );
+				stats.update();
+			}
+		</script>
+
+	</body>
+</html>

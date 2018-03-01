@@ -6,3 +6,6 @@ bin/data/sequence/*
 
 obj/*
 .idea/
+
+blender/scripts/utils/__pycache__/
+*.blend1
