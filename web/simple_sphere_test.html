@@ -16,13 +16,13 @@
 	</head>
 
 	<body>
-		<script src="/web/js/three.js"></script>
+		<script src="js/three.js"></script>
 
-		<script src="/web/js/controls/OrbitControls.js"></script>
-		<script src="/web/js/loaders/GLTFLoader.js"></script>
+		<script src="js/controls/OrbitControls.js"></script>
+		<script src="js/loaders/GLTFLoader.js"></script>
 
-		<script src="/web/js/Detector.js"></script>
-		<script src="/web/js/libs/stats.min.js"></script>
+		<script src="js/Detector.js"></script>
+		<script src="js/libs/stats.min.js"></script>
 
 		<script>
 			if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
@@ -44,7 +44,8 @@
 
 				// model
 				var loader = new THREE.GLTFLoader();
-				loader.load( '/bin/data/simple_sphere_test.gltf', function ( gltf ) {
+				// loader.load( '/bin/data/simple_sphere_test.gltf', function ( gltf ) {
+				loader.load( 'https://raw.githubusercontent.com/davydka/animate3D/master/bin/data/simple_sphere_test.gltf', function ( gltf ) {
 
 					console.log(gltf);
 					const cam = gltf.cameras[0];
