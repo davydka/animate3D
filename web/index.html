@@ -73,7 +73,8 @@
 
 				// model
 				var loader = new THREE.GLTFLoader();
-				loader.load( '/bin/data/dw_cube_animate.gltf', function ( gltf ) {
+				loader.load( 'https://raw.githubusercontent.com/davydka/animate3D/master/bin/data/dw_cube_animate.gltf', function ( gltf ) {
+				// loader.load( '/bin/data/dw_cube_animate.gltf', function ( gltf ) {
 
 					// gltf.animations;
 					mixer = new THREE.AnimationMixer(gltf.scene);
