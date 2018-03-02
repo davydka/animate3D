@@ -14,10 +14,12 @@ export using glTF-Blender-Exporter
 
 https://github.com/KhronosGroup/glTF-Blender-Exporter/tree/master/scripts
 
+Do not check "apply modifiers" it removes Shape Keys
+
 
 https://threejs.org/docs/#examples/loaders/GLTFLoader
 
-![gltf export settings](/Screenshot_2018-02-23_12-23-22.png?raw=true "gltf export settings")
+![gltf export settings](/Screenshot_2018-03-02_15-58-39.png?raw=true "gltf export settings")
 
 
 openframeworks
