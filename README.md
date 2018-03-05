@@ -6,7 +6,12 @@ make run
 
 # other term
 python -m SimpleHTTPServer
+
+# useful links
+https://blender.stackexchange.com/questions/31467/how-to-reduce-vertex-count-on-a-mesh
+https://blender.stackexchange.com/questions/80868/transforming-morphing-one-objects-shape-into-anothers
 ```
+
 
 three.js
 
