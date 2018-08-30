@@ -20,7 +20,7 @@
 		<script src="js/three.js"></script>
 
 		<script src="js/controls/OrbitControls.js"></script>
-		<script src="js/loaders/GLTFLoader.js"></script>
+		<script src="js/loaders/ColladaLoader.js"></script>
 
 		<script src="js/Detector.js"></script>
 		<script src="js/libs/stats.min.js"></script>
@@ -49,19 +49,7 @@
 				controls.target.set( 0, -0.2, -0.2 );
 				controls.update();
 
-				// envmap
-				/*
-				var path = 'textures/cube/skyboxsun25deg/';
-				var format = '.jpg';
-				var envMap = new THREE.CubeTextureLoader().load( [
-					path + 'px' + format, path + 'nx' + format,
-					path + 'py' + format, path + 'ny' + format,
-					path + 'pz' + format, path + 'nz' + format
-				] );
-				*/
-
 				scene = new THREE.Scene();
-				// scene.background = envMap;
 
 				light = new THREE.HemisphereLight( 0xbbbbff, 0x444422 );
 				light.position.set( 0, 1, 0 );
@@ -72,18 +60,18 @@
 				scene.add( light );
 
 				// model
-				var loader = new THREE.GLTFLoader();
-				loader.load( 'https://raw.githubusercontent.com/davydka/animate3D/master/bin/data/dw_cube_animate.gltf', function ( gltf ) {
-				// loader.load( '/bin/data/dw_cube_animate.gltf', function ( gltf ) {
+				var loader = new THREE.ColladaLoader();
+				// loader.load( 'https://raw.githubusercontent.com/davydka/animate3D/master/bin/data/untitled.dae', function ( model ) {
+				loader.load( '/bin/data/untitled.dae', function ( model ) {
 
-					// gltf.animations;
-					mixer = new THREE.AnimationMixer(gltf.scene);
-					console.log(gltf);
-					console.log(gltf.animations[0]);
-					gltf.animations[0];
+					// model.animations;
+					mixer = new THREE.AnimationMixer(model.scene);
+					console.log(model);
+					console.log(model.animations[0]);
+					model.animations[0];
 
-					scene.add( gltf.scene );
-					mixer.clipAction(gltf.animations[0]).play();
+					scene.add( model.scene );
+					mixer.clipAction(model.animations[0]).play();
 					animate();
 
 				} );
@@ -110,8 +98,6 @@
 				renderer.setSize( window.innerWidth, window.innerHeight );
 
 			}
-
-			//
 
 			function animate() {
 
