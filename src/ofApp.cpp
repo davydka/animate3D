@@ -9,10 +9,10 @@ void ofApp::setup(){
 
     animationPosition = 0;
 
-    // model.loadModel("astroBoy_walk.dae", false);
     model.loadModel("untitled.dae", false);
     model.setPosition(ofGetWidth() * 0.5, (float)ofGetHeight() * 0.5 , 0);
     model.setLoopStateForAllAnimations(OF_LOOP_NORMAL);
+    model.setScale(100,100,100);
     model.playAllAnimations();
 }
 
@@ -26,6 +26,8 @@ void ofApp::update(){
 //--------------------------------------------------------------
 void ofApp::draw(){
     ofSetColor(255);
+
+    ofEnableDepthTest();
 
     light.enable();
     ofEnableSeparateSpecularLight();
