@@ -33,6 +33,9 @@ class ofApp : public ofBaseApp{
 
         ofMesh mesh;
         ofLight light;
+
+        ofEasyCam cam;
+        // ofCamera cam;
 };
 
 #endif
