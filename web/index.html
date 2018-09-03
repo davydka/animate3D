@@ -42,12 +42,11 @@
       container = document.createElement( 'div' );
       document.body.appendChild( container );
 
-      camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 0.25, 20 );
-      // camera.position.set( -1.8, 0.9, 2.7 );
-      camera.position.set( -8, 5, 14 );
+      camera = new THREE.PerspectiveCamera( 35, window.innerWidth / window.innerHeight, 0.1, 1000 );
+      camera.position.set( 0, 1, 6.5 );
 
       controls = new THREE.OrbitControls( camera );
-      controls.target.set( 0, -0.2, -0.2 );
+      controls.target.set( 0, 0, 0 );
       controls.update();
 
       scene = new THREE.Scene();
@@ -66,11 +65,18 @@
       // loader.load( 'https://raw.githubusercontent.com/davydka/animate3D/master/bin/data/untitled.gltf', function ( model ) {
       loader.load( '/bin/data/untitled.gltf', function ( model ) {
 
-        model.animations;
         mixer = new THREE.AnimationMixer(model.scene);
         console.log(model);
-        // console.log(model.animations[0]);
-        model.animations[0];
+        model.scene.children.map(child => {
+          if(child.name === "Camera") {
+            camera.position.set(
+              child.position.x,
+              child.position.y,
+              child.position.z
+            );
+            camera.rotation.set(0,0,0);
+          }
+        });
 
         scene.add( model.scene );
         mixer.clipAction(model.animations[0]).play();
