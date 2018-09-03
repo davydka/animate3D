@@ -1,5 +1,12 @@
 #include "ofApp.h"
 
+int val;
+string translate;
+string scale;
+string rotx;
+string roty;
+string rotz;
+
 //--------------------------------------------------------------
 void ofApp::setup(){
     ofSetLogLevel(OF_LOG_VERBOSE);
@@ -14,6 +21,58 @@ void ofApp::setup(){
     model.setLoopStateForAllAnimations(OF_LOOP_NORMAL);
     model.setScale(100,100,100);
     model.playAllAnimations();
+
+    cout << ofToString(model.getAssimpScene()) << endl;
+    // cout << ofToString(model.getMeshCount()) << endl;
+
+    if(xml.loadFile("untitled.dae")){
+      cout << "file loaded" << endl;
+    }
+    else {
+      cout << "can't load file" << endl;
+    }
+    
+    xml.pushTag("COLLADA", 0);
+    xml.pushTag("library_visual_scenes", 0);
+    xml.pushTag("visual_scene", 0);
+    /*
+    vector<string> outNames;
+    xml.getAttributeNames("node", outNames);
+    cout << ofToString(outNames) << endl;
+    */
+    int num = xml.getNumTags("node");
+    for( int i = 0; i < num; i++ ) {
+      if(xml.getAttribute("node", "id", "", i) == "Camera") {
+        xml.pushTag("node", i);
+        translate = xml.getValue("translate", "", 0);
+        scale = xml.getValue("scale", "", 0);
+
+        int rots = xml.getNumTags("rotate");
+        for( int ii = 0; ii < rots; ii++ ) {
+          // cout << xml.getAttribute("rotate", "sid", "", ii) << endl;
+          if(xml.getAttribute("rotate", "sid", "", ii) == "rotationX") {
+            rotx = xml.getValue("rotate", "", ii);
+          }
+          if(xml.getAttribute("rotate", "sid", "", ii) == "rotationY") {
+            roty = xml.getValue("rotate", "", ii);
+          }
+          if(xml.getAttribute("rotate", "sid", "", ii) == "rotationZ") {
+            rotz = xml.getValue("rotate", "", ii);
+          }
+        }
+
+        xml.popTag();
+      }
+    }
+    xml.popTag();
+    xml.popTag();
+    xml.popTag();
+
+    cout << translate << endl;
+    cout << scale << endl;
+    cout << rotx << endl;
+    cout << roty << endl;
+    cout << rotz << endl;
 }
 
 //--------------------------------------------------------------
@@ -28,16 +87,20 @@ void ofApp::draw(){
     ofSetColor(255);
 
     ofEnableDepthTest();
-
     light.enable();
     ofEnableSeparateSpecularLight();
 
     model.drawFaces();
 
-    ofSetColor(255, 255, 255 );
+    ofDisableDepthTest();
+    light.disable();
+    ofDisableLighting();
+    ofDisableSeparateSpecularLight();
+
+    // ofSetColor(255);
     stringstream ss;
-    ss << "FPS: " << ofToString(ofGetFrameRate(),0) <<endl<<endl;
-    ss << "num of animations in this model: " + ofToString(model.getAnimationCount());
+    ss << "FPS: " << ofToString(ofGetFrameRate(),0) <<endl;
+    ss << "animations: " + ofToString(model.getAnimationCount());
     ofDrawBitmapString(ss.str().c_str(), 20, 20);
 }
 
