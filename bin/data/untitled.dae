@@ -5,8 +5,8 @@
       <author>Blender User</author>
       <authoring_tool>Blender 2.79.0 commit date:2017-09-11, commit time:10:43, hash:5bd8ac9</authoring_tool>
     </contributor>
-    <created>2018-08-30T17:47:41</created>
-    <modified>2018-08-30T17:47:41</modified>
+    <created>2018-09-03T04:12:49</created>
+    <modified>2018-09-03T04:12:49</modified>
     <unit name="meter" meter="1"/>
     <up_axis>Z_UP</up_axis>
   </asset>
@@ -180,7 +180,7 @@
         </technique_common>
       </source>
       <source id="Cube_location_X-output">
-        <float_array id="Cube_location_X-output-array" count="3">0 0 0</float_array>
+        <float_array id="Cube_location_X-output-array" count="3">0 2 0</float_array>
         <technique_common>
           <accessor source="#Cube_location_X-output-array" count="3" stride="1">
             <param name="X" type="float"/>
@@ -196,7 +196,7 @@
         </technique_common>
       </source>
       <source id="Cube_location_X-intangent">
-        <float_array id="Cube_location_X-intangent-array" count="6">-1.975459 0 3.191207 0 8.383274 0</float_array>
+        <float_array id="Cube_location_X-intangent-array" count="6">-1.975459 0 3.191207 2 8.383274 0</float_array>
         <technique_common>
           <accessor source="#Cube_location_X-intangent-array" count="3" stride="2">
             <param name="X" type="float"/>
@@ -205,7 +205,7 @@
         </technique_common>
       </source>
       <source id="Cube_location_X-outtangent">
-        <float_array id="Cube_location_X-outtangent-array" count="6">2.058793 0 7.241726 0 12.45006 0</float_array>
+        <float_array id="Cube_location_X-outtangent-array" count="6">2.058793 0 7.241726 2 12.45006 0</float_array>
         <technique_common>
           <accessor source="#Cube_location_X-outtangent-array" count="3" stride="2">
             <param name="X" type="float"/>
@@ -331,10 +331,10 @@
   <library_visual_scenes>
     <visual_scene id="Scene" name="Scene">
       <node id="Camera" name="Camera" type="NODE">
-        <translate sid="location">7.481132 -6.50764 5.343665</translate>
-        <rotate sid="rotationZ">0 0 1 46.69194</rotate>
+        <translate sid="location">0 -6.5 1</translate>
+        <rotate sid="rotationZ">0 0 1 0</rotate>
         <rotate sid="rotationY">0 1 0 0</rotate>
-        <rotate sid="rotationX">1 0 0 63.5593</rotate>
+        <rotate sid="rotationX">1 0 0 90</rotate>
         <scale sid="scale">1 1 1</scale>
         <instance_camera url="#Camera-camera"/>
       </node>
@@ -347,11 +347,11 @@
         <instance_light url="#Lamp-light"/>
       </node>
       <node id="Cube" name="Cube" type="NODE">
-        <translate sid="location">0 0 1.769237</translate>
-        <rotate sid="rotationZ">0 0 1 33</rotate>
+        <translate sid="location">0 0 1</translate>
+        <rotate sid="rotationZ">0 0 1 45</rotate>
         <rotate sid="rotationY">0 1 0 0</rotate>
         <rotate sid="rotationX">1 0 0 0</rotate>
-        <scale sid="scale">1 1 1</scale>
+        <scale sid="scale">0.9999999 0.9999999 1</scale>
         <instance_geometry url="#Cube-mesh" name="Cube">
           <bind_material>
             <technique_common>

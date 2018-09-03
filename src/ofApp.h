@@ -31,9 +31,6 @@ class ofApp : public ofBaseApp{
 
         float animationPosition;
 
-        ofMesh mesh;
-        ofLight light;
-
         ofEasyCam cam;
         // ofCamera cam;
 };
