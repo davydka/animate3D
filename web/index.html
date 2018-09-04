@@ -55,15 +55,19 @@
       light.position.set( 0, 1, 0 );
       scene.add( light );
 
-      light = new THREE.DirectionalLight( 0xffffff );
-      light.position.set( -10, 6, -10 );
+      light = new THREE.DirectionalLight( 0xffffff, 1 );
+      light.position.set( -10, 6, 10 );
+      scene.add( light );
+
+      light = new THREE.PointLight( 0xff0040, 1, 50 );
       scene.add( light );
 
       var Bcube;
       // model
       var loader = new THREE.GLTFLoader();
       // loader.load( 'https://raw.githubusercontent.com/davydka/animate3D/master/bin/data/untitled.gltf', function ( model ) {
-      loader.load( '/bin/data/untitled.gltf', function ( model ) {
+      // loader.load( '/bin/data/untitled.gltf', function ( model ) {
+      loader.load( '/bin/data/text.gltf', function ( model ) {
 
         mixer = new THREE.AnimationMixer(model.scene);
         console.log(model);

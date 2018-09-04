@@ -18,7 +18,8 @@ void ofApp::setup(){
 
   animationPosition = 0;
 
-  model.loadModel("untitled.dae", false);
+  // model.loadModel("untitled2.dae", false);
+  model.loadModel("text.dae", false);
   model.disableMaterials();
   // model.setPosition(ofGetWidth() * 0.5, (float)ofGetHeight() * 0.5 , 0);
   model.setLoopStateForAllAnimations(OF_LOOP_NORMAL);
