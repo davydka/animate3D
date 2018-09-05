@@ -50,7 +50,9 @@
       controls.update();
 
       scene = new THREE.Scene();
+      scene.background = new THREE.Color( 0x323232 );
 
+      /*
       light = new THREE.HemisphereLight( 0xbbbbff, 0x444422 );
       light.position.set( 0, 1, 0 );
       scene.add( light );
@@ -61,17 +63,22 @@
 
       light = new THREE.PointLight( 0xff0040, 1, 50 );
       scene.add( light );
+      */
 
-      var Bcube;
       // model
       var loader = new THREE.GLTFLoader();
       // loader.load( 'https://raw.githubusercontent.com/davydka/animate3D/master/bin/data/untitled.gltf', function ( model ) {
       // loader.load( '/bin/data/untitled.gltf', function ( model ) {
       loader.load( '/bin/data/text.gltf', function ( model ) {
-
         mixer = new THREE.AnimationMixer(model.scene);
         console.log(model);
         model.scene.children.map(child => {
+          if(child.material) {
+            var meshMaterial = new THREE.MeshBasicMaterial({color: 0x00ff00, wireframe: true});
+            child.material = meshMaterial;
+            return child;
+          }
+
           if(child.name === "Camera") {
             camera.position.set(
               child.position.x,
@@ -85,26 +92,25 @@
         scene.add( model.scene );
         mixer.clipAction(model.animations[0]).play();
         animate();
+      });
 
-      } );
+      var geometry = new THREE.PlaneGeometry( 6.4, 6.4, 32, 32 );
+      var material = new THREE.MeshBasicMaterial( {color: 0x0080ff, wireframe: true} );
+      var plane = new THREE.Mesh( geometry, material );
+      plane.rotation.x = Math.PI / 2;
+      scene.add( plane );
 
-        var geometry = new THREE.BoxGeometry( 1, 1, 1 );
-        var material = new THREE.MeshPhongMaterial( {color: 0x00ff00} );
-        var Tcube = new THREE.Mesh( geometry, material );
-        // scene.add( Tcube );
+      renderer = new THREE.WebGLRenderer( { antialias: true } );
+      renderer.setPixelRatio( window.devicePixelRatio );
+      renderer.setSize( window.innerWidth, window.innerHeight );
+      renderer.gammaOutput = true;
+      container.appendChild( renderer.domElement );
 
-        renderer = new THREE.WebGLRenderer( { antialias: true } );
-        renderer.setPixelRatio( window.devicePixelRatio );
-        renderer.setSize( window.innerWidth, window.innerHeight );
-        renderer.gammaOutput = true;
-        container.appendChild( renderer.domElement );
+      window.addEventListener( 'resize', onWindowResize, false );
 
-        window.addEventListener( 'resize', onWindowResize, false );
-
-    // stats
-    stats = new Stats();
-    container.appendChild( stats.dom );
-
+      // stats
+      stats = new Stats();
+      container.appendChild( stats.dom );
     }
 
     function onWindowResize() {
